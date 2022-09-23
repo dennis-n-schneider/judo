@@ -1,12 +1,12 @@
-#!/bin/bash
+#!/bin/sh
 
 # install and start venv
 apt-get install -y python3-venv
 python -m venv .venv
-source .venv/bin/activate
+. .venv/bin/activate
 
 # add venv to jupyter notebook
-pip install -y ipykernel
+yes | pip install ipykernel
 python -m ipykernel install --name=.venv
 
 # install requirements locally
