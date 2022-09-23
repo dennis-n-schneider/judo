@@ -1,0 +1,13 @@
+services:
+  server:
+    image: test-poc
+    container_name: server
+    volumes:
+      # Mount current directory to container workdir
+      - .:/app
+      - ./.venv:/app/.venv
+      - ./requirements.txt:/app/requirements.txt
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_TOKEN=Hello
