@@ -7,3 +7,4 @@ The token of the Jupyter-Notebook Session is preset to "Hello", which should be 
 
 In order to start an isolated Jupyter-Notebook session in a certain directory, copy the file `docker-compose.yml` into the root-directory and run `docker-compose up`.
 
+Requirements listed in `requirements.txt` will automatically be installed in the venv.
