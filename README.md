@@ -3,9 +3,18 @@ A small Docker Image which runs jupyter-notebook and any needed packages inside 
 
 This results in an uncluttered work-station which installs large packages like Python and PyTorch once (within the Docker-Image) while being able to keep isolated working environments within each project by installing them locally within the venv.
 
+## Setup
+
+Navigate to `base-docker/` and run the following command:
+```
+docker build -t base-docker .
+```
+This will install the needed base-docker image.
+
 ## Usage
 
 In order to start an isolated Jupyter-Notebook session in a certain directory, copy the file `docker-compose.yml` into the root-directory and run `docker-compose up`.
+You may want to set a descriptive `container_name` within the `docker-compose.yml` for each project.
 
 The token of the Jupyter-Notebook Session is preset to "Hello", which should be changed in `docker-compose.yml`.
 
