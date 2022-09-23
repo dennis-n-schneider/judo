@@ -1,6 +1,6 @@
 services:
   server:
-    image: test-poc
+    image: base-docker
     container_name: server
     volumes:
       # Mount current directory to container workdir
