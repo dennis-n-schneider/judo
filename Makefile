@@ -3,7 +3,8 @@
 install:
 	cp jupy /usr/local/bin/jupy
 	chmod 605 /usr/local/bin/jupy
-	mkdir -p /usr/local/share/jupy
+	mkdir /usr/local/share/jupy
+	chmod 755 /usr/local/share/jupy
 	cp Dockerfile /usr/local/share/jupy/Dockerfile
 	chmod 604 /usr/local/share/jupy/Dockerfile
 
