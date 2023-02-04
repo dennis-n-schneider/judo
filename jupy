@@ -42,7 +42,7 @@ case $command in
     init)
         cp $data_root"/Dockerfile" .
         touch requirements.txt && chmod 604 requirements.txt
-        if [ ! -f .git ]; then
+        if [ ! -d .git ]; then
             git init
             # Get up-to-date gitignore file for a jupyter notebook.
             git fetch --depth=1 git@github.com:jupyter/notebook.git
