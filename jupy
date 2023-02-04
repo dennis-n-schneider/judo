@@ -50,6 +50,7 @@ case $command in
             git add Dockerfile requirements.txt
         fi
         docker build -t $project_name .
+        rm Dockerfile
         ;;
 
     run)
