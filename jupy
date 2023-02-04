@@ -53,7 +53,7 @@ case $command in
         ;;
 
     run)
-        docker run -it --rm -p $port:8888 -v $PWD:/home/jovyan/work --name $project_name $project_name
+        docker run --pull never -it --rm -p $port:8888 -v $PWD:/home/jovyan/work --name $project_name $project_name
         ;;
 
     help|*)
