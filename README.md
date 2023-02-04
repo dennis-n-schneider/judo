@@ -1,21 +1,24 @@
-# ml-kickstarter
-A small Docker Image which runs jupyter-notebook and any needed packages inside a Docker-Container and installs packages to a venv.
+# jupy
+A small shell utility to provide an isolated Jupyter-Lab runtime for isolated, reproducable development keeping the host-machine uncluttered.
+The result is a minimal Docker-image which can be used out of the box while enabling maximum productivity by initializing a gitignore-file suitable for Jupyter Lab and preinstalling any requirements listed in `requirements.txt`.
 
-This results in an uncluttered work-station which installs large packages like Python and PyTorch once (within the Docker-Image) while being able to keep isolated working environments within each project by installing them locally within the venv.
+## Installation
 
-## Setup
-
-Navigate to `base-docker/` and run the following command:
+Clone this git-repository and run the following command:
 ```
-docker build -t base-docker .
+sudo make install
 ```
-This will install the needed base-docker image.
+
+## Uninstallation
+
+Run the following command:
+```
+sudo make uninstall
+```
 
 ## Usage
 
-In order to start an isolated Jupyter-Notebook session in a certain directory, copy the file `docker-compose.yml` into the root-directory and run `docker-compose up`.
-You may want to set a descriptive `container_name` within the `docker-compose.yml` for each project.
+In order to start an isolated Jupyter-Lab session in a certain directory, simply run `jupy init`.
+Requirements listed in `requirements.txt` will automatically be installed in the container.
 
-The token of the Jupyter-Notebook Session is preset to "Hello", which should be changed in `docker-compose.yml`.
-
-Requirements listed in `requirements.txt` will automatically be installed in the venv.
+After initializing a git-repository and the Docker environment, run the container with `jupy run`.

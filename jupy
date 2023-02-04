@@ -1,0 +1,74 @@
+#!/bin/sh
+
+# Initialize default values.
+default_port=8888
+port=$default_port
+data_root="/usr/local/share/jupy"
+project_name=$(basename $PWD | tr '[:upper:]' '[:lower:]')
+
+if [ $# -gt 0 ]; then
+    command=$1; shift
+fi
+
+# Read input arguments.
+LONGOPTS=port:,name:
+OPTIONS=p:n:
+
+ARGUMENTS=$(getopt --options=$OPTIONS --longoptions=$LONGOPTS --name $0 -- $@)
+if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
+    # getopt: wrong arguments
+    exit 2
+fi
+eval set -- "$ARGUMENTS"
+
+while true; do
+    case $1 in
+        -p|--port)
+            port=$2
+            shift 2
+            ;;
+        -n|--name)
+            project_name=$2
+            shift 2
+            ;;
+        --)
+            shift
+            break
+            ;;
+    esac
+done
+
+case $command in
+    init)
+        cp $data_root"/Dockerfile" .
+        touch requirements.txt && chmod 604 requirements.txt
+        if [ ! -f .git ]; then
+            git init
+            # Get up-to-date gitignore file for a jupyter notebook.
+            git fetch --depth=1 git@github.com:jupyter/notebook.git
+            git checkout FETCH_HEAD -- .gitignore
+            git add Dockerfile requirements.txt
+        fi
+        docker build -t $project_name .
+        ;;
+
+    run)
+        docker run -it --rm -p $port:8888 -v $PWD:/home/jovyan/work --name $project_name $project_name
+        ;;
+
+    help|*)
+        echo """
+Create an isolated jupyter instance for development.
+Available commands:
+init:
+    Initialize the Docker runtime and git repository.
+    -n|--name: Specify the name of the Docker image. Default: The current directories name (lowercase).
+run:
+    Run the Docker container.
+    -p|--port: Specify the port to connect to the container. Default: $default_port
+    -n|--name: Specify the name of the Docker image. Default: The current directories name (lowercase).
+help:
+    View this help.
+"""
+        ;;
+esac
