@@ -11,8 +11,8 @@ if [ $# -gt 0 ]; then
 fi
 
 # Read input arguments.
-LONGOPTS=port:,name:
-OPTIONS=p:n:
+LONGOPTS=port:,name:,image:
+OPTIONS=p:n:i:
 
 ARGUMENTS=$(getopt --options=$OPTIONS --longoptions=$LONGOPTS --name $0 -- $@)
 if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
@@ -29,6 +29,10 @@ while true; do
             ;;
         -n|--name)
             project_name=$2
+            shift 2
+            ;;
+        -i|--image)
+            image=$2
             shift 2
             ;;
         --)
@@ -49,6 +53,8 @@ case $command in
             git checkout FETCH_HEAD -- .gitignore
             git add Dockerfile requirements.txt
         fi
+        # Use alternative image if specified.
+        [ ! -z $image ] && sed -i "s/FROM .*/FROM $image" Dockerfile
         docker build -t $project_name .
         rm Dockerfile
         ;;
@@ -63,11 +69,12 @@ Create an isolated jupyter instance for development.
 Available commands:
 init:
     Initialize the Docker runtime and git repository.
-    -n|--name: Specify the name of the Docker image. Default: The current directories name (lowercase).
+    -n|--name: Specify the name of the Docker container. Default: The current directories name (lowercase).
+    -i|--image: Use alternative base-image, instead of default jupyter/scipy-notebook.
 run:
     Run the Docker container.
-    -p|--port: Specify the port to connect to the container. Default: $default_port
-    -n|--name: Specify the name of the Docker image. Default: The current directories name (lowercase).
+    -p|--port: Specify the port to connect to the container. Default: 8888
+    -n|--name: Specify the name of the Docker container and image (Uses the same name). Default: The current directories name (lowercase).
 help:
     View this help.
 """
