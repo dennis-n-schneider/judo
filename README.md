@@ -1,4 +1,4 @@
-# Judo
+# judo
 
 **Ju**pyter in a **Do**cker-Container!
 
