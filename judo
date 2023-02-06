@@ -53,7 +53,7 @@ case $command in
             git add Dockerfile requirements.txt
         fi
         # Use alternative image if specified.
-        [ ! -z $image ] && sed -i "s/FROM .*/FROM $image" Dockerfile
+        [ ! -z $image ] && sed -i "s/FROM .*/FROM $image/" Dockerfile
         docker build -t $project_name .
         rm Dockerfile
         ;;
