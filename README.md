@@ -23,15 +23,15 @@ $ make uninstall
 
 In order to start an isolated Jupyter-Lab session in a certain directory, simply run the following command.
 ```shell
-# jupy init
+# judo init
 ```
 Requirements listed in `requirements.txt` will automatically be installed in the container. \
 After initializing a git-repository and the Docker environment, the environment can be run.
 ```shell
-# jupy run
+# judo run
 ```
 
 Available commands and configuration options can be viewed by:
 ```shell
-# jupy help
+# judo help
 ```
