@@ -5,30 +5,30 @@ The result is a minimal Docker-image which can be used out of the box while enab
 ## Installation
 
 Clone this git-repository and run the following command:
-```
-sudo make install
+```shell
+$ make
 ```
 
 ## Uninstallation
 
 Run the following command:
-```
-sudo make uninstall
+```shell
+$ make uninstall
 ```
 
 ## Usage
 
 In order to start an isolated Jupyter-Lab session in a certain directory, simply run the following command.
-```
-jupy init
+```shell
+# jupy init
 ```
 Requirements listed in `requirements.txt` will automatically be installed in the container. \
 After initializing a git-repository and the Docker environment, the environment can be run.
-```
-jupy run
+```shell
+# jupy run
 ```
 
 Available commands and configuration options can be viewed by:
-```
-jupy help
+```shell
+# jupy help
 ```
