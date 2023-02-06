@@ -2,7 +2,7 @@
 
 # Initialize default values.
 port=8888
-data_root="/usr/local/share/jupy"
+data_root="/usr/local/share/judo"
 project_name=$(basename $PWD | tr '[:upper:]' '[:lower:]')
 
 if [ $# -gt 0 ]; then
