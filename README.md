@@ -1,4 +1,7 @@
-# jupy
+# Judo
+
+**Ju**pyter in a **Do**cker-Container!
+
 A small shell utility to provide an isolated Jupyter-Lab runtime for isolated, reproducable development keeping the host-machine uncluttered.
 The result is a minimal Docker-image which can be used out of the box while enabling maximum productivity by initializing a gitignore-file suitable for Jupyter Lab and preinstalling any requirements listed in `requirements.txt`.
 

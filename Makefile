@@ -1,13 +1,13 @@
 .SILENT: install
 
 install:
-	cp jupy /usr/local/bin/jupy
-	chmod 605 /usr/local/bin/jupy
-	mkdir /usr/local/share/jupy
-	chmod 755 /usr/local/share/jupy
-	cp Dockerfile /usr/local/share/jupy/Dockerfile
-	chmod 604 /usr/local/share/jupy/Dockerfile
+	cp judo /usr/local/bin/judo
+	chmod 605 /usr/local/bin/judo
+	mkdir /usr/local/share/judo
+	chmod 755 /usr/local/share/judo
+	cp Dockerfile /usr/local/share/judo/Dockerfile
+	chmod 604 /usr/local/share/judo/Dockerfile
 
 uninstall:
-	rm -r /usr/local/bin/jupy
-	rm -r /usr/local/share/jupy
+	rm -r /usr/local/bin/judo
+	rm -r /usr/local/share/judo
