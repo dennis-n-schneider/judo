@@ -11,13 +11,13 @@ JUDO_DATA_DIR=/usr/local/share/judo
 install: $(JUDO_BIN)
 
 $(JUDO_BIN): $(JUDO_DATA_DIR) $(JUDO_DATA_DIR)/Dockerfile $(subst $(SRC_ROOT),$(JUDO_DATA_DIR),$(wildcard $(SRC_ROOT)/*.sh))
-	cp $(BINARY) $@
+	cp -p $(BINARY) $@
 
 $(JUDO_DATA_DIR)/Dockerfile: $(SRC_ROOT)/Dockerfile
-	cp $< $@
+	cp -p $< $@
 
 $(subst $(SRC_ROOT),$(JUDO_DATA_DIR),$(wildcard $(SRC_ROOT)/*.sh)): $$(subst $$(JUDO_DATA_DIR), $$(SRC_ROOT), $$@)
-	cp $< $@
+	cp -p $< $@
 
 $(JUDO_DATA_DIR):
 	mkdir $@ && chmod 777 $@
