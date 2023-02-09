@@ -34,9 +34,6 @@ function _active_plugins()
     echo $active_plugins
 }
 
-# JUDO_CONFIG_HOME="$HOME/.config/judo"
-# DATA_ROOT="/usr/local/share/judo"
-
 function list()
 {
     echo "-- Installed plugins"
@@ -47,7 +44,7 @@ function list()
 
 function install()
 {
-    plugin_name=$(dirname $1)
+    plugin_name=$(dirname $PWD)
     cp . $DATA_ROOT/plugins/$plugin_name && \
         echo "Successfully installed $plugin_name. You may now add it to your plugins-files."
 }
@@ -77,8 +74,8 @@ function exec_plugins()
             ;;
 
         install)
-            install $2
-            shift 2
+            install
+            shift 1
             ;;
 
         help|*)
