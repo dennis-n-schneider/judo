@@ -2,7 +2,8 @@
 
 # Initialize default values.
 port=8888
-data_root="/usr/local/share/judo"
+DATA_ROOT="/usr/local/share/judo"
+JUDO_CONFIG_HOME="$HOME/.config/judo"
 project_name=$(basename $PWD | tr '[:upper:]' '[:lower:]')
 
 if [ $# -gt 0 ]; then
@@ -43,34 +44,16 @@ done
 
 case $command in
     init)
-        mkdir -p .judo/plugins
-        touch .judo/config.sh
-        datafiles=$(ls -d "$data_root"/*)
-        datafile_names=$(ls $data_root)
-        cp -r --preserve=all $HOME/.config/judo/plugins .judo/developer-plugins
-        cp $HOME/.config/judo/config.sh .judo/developer-config.sh
-        echo $datafiles | sed 's/ /\n/g' | xargs -I{} cp -r --preserve=all {} .judo
-        touch requirements.txt && chmod 604 requirements.txt
-        if [ ! -d ".git" ]; then
-            git init
-            # Get up-to-date gitignore file for a jupyter notebook.
-            git fetch --depth=1 git@github.com:jupyter/notebook.git
-            git checkout FETCH_HEAD -- .gitignore
-            git add requirements.txt
-        fi
-        # Use alternative image if specified.
-        if [ ! -z $image ]; then
-            alternative_image="--build-arg BASE_IMAGE=$image"
-        fi
-        docker build -t $project_name $alternative_image .judo
-        cd .judo
-        rm -r developer-plugins
-        rm developer-config.sh
-        echo $datafile_names | sed 's/ /\n/g' | xargs rm -r
+        source $DATA_ROOT/src/init.sh
+        ;;
+
+    plugins)
+        source $DATA_ROOT/src/plugins.sh
+        exec_plugins
         ;;
 
     run)
-        docker run --pull never -e GRANT_SUDO=yes --user=root -it --rm -p $port:8888 -v $PWD:/home/jovyan/work --name $project_name $project_name
+        docker run --pull never -e GRANT_SUDO=yes -it --rm -p $port:8888 -v $PWD:/home/jovyan/work --name $project_name $project_name
         ;;
 
     help|*)
@@ -85,6 +68,8 @@ run:
     Run the Docker container.
     -p|--port: Specify the port to connect to the container. Default: 8888
     -n|--name: Specify the name of the Docker container and image (Uses the same name). Default: The current directories name (lowercase).
+plugins:
+    Manage and get information on activate and installed plugins.
 help:
     View this help.
 """
