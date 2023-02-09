@@ -1,18 +1,11 @@
 #!/bin/sh
 
-DEVELOPER_PLUGINS_DIR='/tmp/developer-plugins'
-PROJECT_PLUGINS_DIR='/tmp/project-plugins'
+PLUGINS_DIR='/tmp/plugins'
 
-if [ $(\ls -A $PROJECT_PLUGINS_DIR | head -1) ]; then
-    LOAD_PLUGINS=$PROJECT_PLUGINS_DIR
-elif [ $(\ls -A $DEVELOPER_PLUGINS_DIR | head -1) ]; then
-    LOAD_PLUGINS=$DEVELOPER_PLUGINS_DIR
-fi
+for plugin in $(ls -d "$PLUGINS_DIR"/* | sed 's/ /\n/g'); do
+    echo "Installing $plugin ..."
+    cd $plugin
+    sh run.sh
+done
 
-if [ ! -z $LOAD_PLUGINS ]; then
-    for plugin in $(ls -d "$LOAD_PLUGINS"/* | sed 's/ /\n/g'); do
-        echo $plugin
-        cd $plugin
-        sh run.sh
-    done
-fi
+cd $WORKDIR

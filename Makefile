@@ -17,9 +17,6 @@ $(JUDO_BIN): $(JUDO_DATA_DIR) \
 			$(subst $(SRC_ROOT),$(JUDO_DATA_DIR)/src,$(wildcard $(SRC_ROOT)/*.sh))
 	cp -p $(BINARY) $@
 
-$(JUDO_DATA_DIR)/Dockerfile: $(SRC_ROOT)/Dockerfile
-	cp -p $< $@
-
 $(subst $(ASSETS_ROOT),$(JUDO_DATA_DIR)/assets,$(wildcard $(ASSETS_ROOT)/*)): $$(subst $$(JUDO_DATA_DIR)/assets, $$(ASSETS_ROOT), $$@)
 	mkdir -p $(@D) && chmod 777 $(@D)
 	cp -p $< $@
@@ -29,10 +26,10 @@ $(subst $(SRC_ROOT),$(JUDO_DATA_DIR)/src,$(wildcard $(SRC_ROOT)/*.sh)): $$(subst
 	cp -p $< $@
 
 $(JUDO_DATA_DIR):
-	mkdir -p $@ && chmod 777 $@
+	mkdir $@ && chmod 777 $@
 
 $(JUDO_DATA_DIR)/plugins:
-	touch $@ && chmod 766 $@
+	mkdir $@ && chmod 777 $@
 
 uninstall:
 	rm $(JUDO_BIN)

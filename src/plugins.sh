@@ -68,18 +68,21 @@ help:
     """
 }
 
-case $1 in
-    list)
-        list
-        shift 1
-        ;;
+function exec_plugins()
+{
+    case $1 in
+        list)
+            list
+            shift 1
+            ;;
 
-    install)
-        install $2
-        shift 2
-        ;;
+        install)
+            install $2
+            shift 2
+            ;;
 
-    help|*)
-        help
-        ;;
-esac
+        help|*)
+            help
+            ;;
+    esac
+}

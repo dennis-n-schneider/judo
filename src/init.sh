@@ -2,11 +2,14 @@
 
 function init()
 {
-    touch .judo/config.sh .judo-plugins
-    datafiles=$(ls -d "$DATA_ROOT"/*)
-    datafile_names=$(ls $DATA_ROOT)
-    cp -rp $judo_config_home/plugins .judo/developer-plugins
-    cp $judo_config_home/config.sh .judo/developer-config.sh
+    mkdir -p .judo/plugins_dir
+    source $DATA_ROOT/src/plugins.sh; echo $(_active_plugins) | xargs -I{} cp -rp $DATA_ROOT/plugins/{} .judo/plugins_dir
+    mkdir -p .judo
+    touch .judo/config.sh .judo/plugins
+    cp $JUDO_CONFIG_HOME/config.sh .judo/combined_config.sh
+    cat .judo/config.sh >> .judo/combined_config.sh
+    datafiles=$(ls -d $DATA_ROOT/assets/*)
+    datafile_names=$(ls $DATA_ROOT/assets)
     echo $datafiles | sed 's/ /\n/g' | xargs -I{} cp -rp {} .judo
     touch requirements.txt && chmod 604 requirements.txt
     if [ ! -d ".git" ]; then
@@ -22,8 +25,8 @@ function init()
     fi
     docker build -t $project_name $alternative_image .judo
     cd .judo
-    rm -r developer-plugins
-    rm developer-config.sh
+    rm -r plugins_dir
+    rm combined_config.sh
     echo $datafile_names | sed 's/ /\n/g' | xargs rm -r
 }
 

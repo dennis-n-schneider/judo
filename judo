@@ -44,11 +44,12 @@ done
 
 case $command in
     init)
-        source src/init.sh
+        source $DATA_ROOT/src/init.sh
         ;;
 
     plugins)
-        source src/plugins.sh
+        source $DATA_ROOT/src/plugins.sh
+        exec_plugins
         ;;
 
     run)

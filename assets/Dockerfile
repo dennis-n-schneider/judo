@@ -7,20 +7,13 @@ WORKDIR ${WORKDIR}
 
 USER root
 
-# Install developer plugins
-COPY ./plugin-install.sh /usr/local/share/judo/
-COPY ./setup-config.sh /usr/local/share/judo/
-COPY ./developer-plugins/ /tmp/developer-plugins/
+# Copy install script.
+COPY ./plugin-install.sh /usr/local/bin/before-notebook.d/
 
-# Setup developer configuration
-COPY ./developer-config.sh /tmp/developer-config.sh
+# Setup configuration.
+COPY ./combined_config.sh /tmp/config.sh
 
-# Install project plugins
-COPY ./plugins/ /tmp/project-plugins/
+# Install plugins.
+COPY ./plugins_dir /tmp/plugins/
 
-# Setup project configuration
-COPY ./config.sh /tmp/project-config.sh
-
-RUN . /usr/local/share/judo/plugin-install.sh && . /usr/local/share/judo/setup-config.sh
-
-# USER jovyan
+RUN sh /tmp/config.sh
