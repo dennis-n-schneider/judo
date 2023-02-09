@@ -49,6 +49,13 @@ function install()
         echo "Successfully installed $plugin_name. You may now add it to your plugins-files."
 }
 
+function uninstall()
+{
+    plugin_name=$1
+    rm -rf $DATA_ROOT/plugins/$plugin_name && \
+        echo "Successfully uinstalled $plugin_name."
+}
+
 function help()
 {
     echo """
@@ -76,6 +83,11 @@ function exec_plugins()
         install)
             install
             shift 1
+            ;;
+
+        uninstall)
+            uninstall $2
+            shift 2
             ;;
 
         help|*)
