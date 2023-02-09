@@ -10,7 +10,7 @@ JUDO_DATA_DIR=/usr/local/share/judo
 
 install: $(JUDO_BIN)
 
-$(JUDO_BIN): $(JUDO_DATA_DIR) $(JUDO_DATA_DIR)/Dockerfile $(subst $(SRC_ROOT),$(JUDO_DATA_DIR),$(wildcard $(SRC_ROOT)/*.sh))
+$(JUDO_BIN): $(JUDO_DATA_DIR) $(JUDO_DATA_DIR)/plugins $(JUDO_DATA_DIR)/Dockerfile $(subst $(SRC_ROOT),$(JUDO_DATA_DIR),$(wildcard $(SRC_ROOT)/*.sh))
 	cp -p $(BINARY) $@
 
 $(JUDO_DATA_DIR)/Dockerfile: $(SRC_ROOT)/Dockerfile
@@ -21,6 +21,9 @@ $(subst $(SRC_ROOT),$(JUDO_DATA_DIR),$(wildcard $(SRC_ROOT)/*.sh)): $$(subst $$(
 
 $(JUDO_DATA_DIR):
 	mkdir $@ && chmod 777 $@
+
+$(JUDO_DATA_DIR)/plugins:
+	touch $@ && chmod 766 $@
 
 uninstall:
 	rm $(JUDO_BIN)
