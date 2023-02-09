@@ -1,17 +1,28 @@
+.SECONDEXPANSION: 
+.PHONY: install uninstall
 .SILENT: install
 
-JUDO_BIN="/usr/local/bin/judo"
-JUDO_DATA_DIR="/usr/local/share/judo"
+BINARY=src/judo
+SRC_ROOT=src
 
-install:
-	cp src/judo $(JUDO_BIN)
-	mkdir $(JUDO_DATA_DIR)
-	cp src/Dockerfile src/plugin-install.sh src/setup-config.sh $(JUDO_DATA_DIR)
-	chmod 755 $(JUDO_BIN)
-	chmod 777 $(JUDO_DATA_DIR)
-	chmod 744 $(JUDO_DATA_DIR)/Dockerfile
-	chmod 755 $(JUDO_DATA_DIR)/plugin-install.sh $(JUDO_DATA_DIR)/setup-config.sh
+JUDO_BIN=/usr/local/bin/judo
+JUDO_DATA_DIR=/usr/local/share/judo
+
+install: $(JUDO_BIN)
+
+$(JUDO_BIN): $(JUDO_DATA_DIR) $(JUDO_DATA_DIR)/Dockerfile $(subst $(SRC_ROOT),$(JUDO_DATA_DIR),$(wildcard $(SRC_ROOT)/*.sh))
+	cp $(BINARY) $@
+
+$(JUDO_DATA_DIR)/Dockerfile: $(SRC_ROOT)/Dockerfile
+	cp $< $@
+
+$(subst $(SRC_ROOT),$(JUDO_DATA_DIR),$(wildcard $(SRC_ROOT)/*.sh)): $$(subst $$(JUDO_DATA_DIR), $$(SRC_ROOT), $$@)
+	cp $< $@
+
+$(JUDO_DATA_DIR):
+	mkdir $@ && chmod 777 $@
 
 uninstall:
 	rm $(JUDO_BIN)
 	rm -r $(JUDO_DATA_DIR)
+
