@@ -30,4 +30,7 @@ function init()
     echo $datafile_names | sed 's/ /\n/g' | xargs rm -r
 }
 
-init
+function exec_init()
+{
+    init
+}
