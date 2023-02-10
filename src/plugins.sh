@@ -44,8 +44,8 @@ function list()
 
 function install()
 {
-    plugin_name=$(dirname $PWD)
-    cp . $DATA_ROOT/plugins/$plugin_name && \
+    plugin_name=${PWD##*/}
+    cp -rp . $DATA_ROOT/plugins/$plugin_name && \
         echo "Successfully installed $plugin_name. You may now add it to your plugins-files."
 }
 
