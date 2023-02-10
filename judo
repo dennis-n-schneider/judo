@@ -45,6 +45,7 @@ done
 case $command in
     init)
         source $DATA_ROOT/src/init.sh
+        exec_init $@
         ;;
 
     plugins)
@@ -53,7 +54,7 @@ case $command in
         ;;
 
     run)
-        docker run --pull never -e GRANT_SUDO=yes -it --rm -p $port:8888 -v $PWD:/home/jovyan/work --name $project_name $project_name
+        docker run --pull never -e GRANT_SUDO=yes --user=root -it --rm -p $port:8888 -v $PWD:/home/jovyan/work --name $project_name $project_name
         ;;
 
     help|*)
