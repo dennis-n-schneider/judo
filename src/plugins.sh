@@ -63,14 +63,14 @@ function uninstall()
 {
     plugin_name=$1
     rm -rf $DATA_ROOT/plugins/$plugin_name && \
-        echo "Successfully uinstalled $plugin_name."
+        echo "Successfully uninstalled $plugin_name."
 }
 
 function help()
 {
     source $DATA_ROOT/src/common.sh
     show_help "judo plugins" "Manage and get information on active and installed plugins." \
-        list "List both installed plugins and plugins activate in the current image. \n
+        list "List both installed plugins and plugins active in the current image. \n
 You may have to update the image for new plugins to take effect." \
         install "When run inside a plugin-directory, install this plugin and make it available for images. \n
 When having specified a plugin-name, pull this plugin from git and install it. \n
