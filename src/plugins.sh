@@ -44,9 +44,19 @@ function list()
 
 function install()
 {
-    plugin_name=${PWD##*/}
-    cp -rp . $DATA_ROOT/plugins/$plugin_name && \
-        echo "Successfully installed $plugin_name. You may now add it to your plugins-files."
+    if [ $# -eq 0 ]; then
+        # Install plugin from current directory
+        plugin_name=${PWD##*/}
+        cp -rp . $DATA_ROOT/plugins/$plugin_name && \
+            echo "Successfully installed $plugin_name. You may now add it to your plugins-files."
+    elsif [ $1 == *"/judo-"* ]
+        # Install plugin from github
+        echo "Installing plugin $1 ..."
+        git clone -q "https://github.com/$1" $DATA_ROOT/plugins
+        echo "Successfully installed plugin $1."
+    else
+        echo 'judo-plugins have to start with "judo-".'
+    fi
 }
 
 function uninstall()
@@ -58,22 +68,21 @@ function uninstall()
 
 function help()
 {
-    echo """
-Manage and get information on activate and installed plugins.
-Available commands:
-list:
-    List both installed plugins and plugins activate in the current image.
-    You may have to update the image for new plugins to take effect.
-install:
-    When run inside a plugin-directory, install this plugin and make it available for images.
-    You can actively use this plugin ny noting its name in the global config under ~/.config/judo/plugins or the project-specific config in <project-directory>/.judo/plugins.
-help:
-    View this help.
-    """
+    source src/common.sh
+    show_help "judo plugins" "Manage and get information on active and installed plugins." \
+        list "List both installed plugins and plugins activate in the current image. \n
+You may have to update the image for new plugins to take effect." \
+        install "When run inside a plugin-directory, install this plugin and make it available for images. \n
+When having specified a plugin-name, pull this plugin from git and install it. \n
+You can use this plugin by noting its name in the global config under ~/.config/judo/plugins or the \n
+project-specific config in <project-directory>/.judo/plugins." \
+        uninstall "Uninstall plugin of given name." \
+        help "View this help."
 }
 
 function exec_plugins()
 {
+    echo $1
     case $1 in
         list)
             list
@@ -92,6 +101,7 @@ function exec_plugins()
 
         help|*)
             help
+            shift 1
             ;;
     esac
 }

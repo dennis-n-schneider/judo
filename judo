@@ -6,51 +6,17 @@ DATA_ROOT="/usr/local/share/judo"
 JUDO_CONFIG_HOME="$HOME/.config/judo"
 project_name=$(basename $PWD | tr '[:upper:]' '[:lower:]')
 
-if [ $# -gt 0 ]; then
-    command=$1; shift
-fi
-
-# Read input arguments.
-LONGOPTS=port:,name:,image:
-OPTIONS=p:n:i:
-
-ARGUMENTS=$(getopt --options=$OPTIONS --longoptions=$LONGOPTS --name $0 -- $@)
-if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
-    # getopt: wrong arguments
-    exit 2
-fi
-eval set -- "$ARGUMENTS"
-
-while true; do
-    case $1 in
-        -p|--port)
-            port=$2
-            shift 2
-            ;;
-        -n|--name)
-            project_name=$2
-            shift 2
-            ;;
-        -i|--image)
-            image=$2
-            shift 2
-            ;;
-        --)
-            shift
-            break
-            ;;
-    esac
-done
-
-case $command in
+case $1 in
     init)
         source $DATA_ROOT/src/init.sh
-        exec_init $@
+        shift 1
+        exec_init "$@"
         ;;
 
     plugins)
         source $DATA_ROOT/src/plugins.sh
-        exec_plugins $@
+        shift 1
+        exec_plugins "$@"
         ;;
 
     run)
@@ -58,21 +24,11 @@ case $command in
         ;;
 
     help|*)
-        echo """
-Create an isolated jupyter instance for development.
-Available commands:
-init:
-    Initialize the Docker runtime and git repository.
-    -n|--name: Specify the name of the Docker container. Default: The current directories name (lowercase).
-    -i|--image: Use alternative base-image, instead of default jupyter/scipy-notebook.
-run:
-    Run the Docker container.
-    -p|--port: Specify the port to connect to the container. Default: 8888
-    -n|--name: Specify the name of the Docker container and image (Uses the same name). Default: The current directories name (lowercase).
-plugins:
-    Manage and get information on activate and installed plugins.
-help:
-    View this help.
-"""
+        source src/common.sh
+        show_help judo "Create an isolated jupyter instance for development" \
+            init "Initialize the Docker runtime and git repository." \
+            run "Run the Docker container." \
+            plugins "Manage and get information on active and installed plugins." \
+            help "View this help."
         ;;
 esac

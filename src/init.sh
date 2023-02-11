@@ -30,7 +30,56 @@ function init()
     echo $datafile_names | sed 's/ /\n/g' | xargs rm -r
 }
 
+
+function help()
+{
+    echo """
+    -n|--name: Specify the name of the Docker container. Default: The current directories name (lowercase).
+    -i|--image: Use alternative base-image, instead of default jupyter/scipy-notebook.
+    """
+}
+
+function parse_arguments()
+{
+    # Read input arguments.
+    LONGOPTS=port:,name:,image:
+    OPTIONS=p:n:i:
+
+    ARGUMENTS=$(getopt --options=$OPTIONS --longoptions=$LONGOPTS --name $0 -- $@)
+    if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
+        # getopt: wrong arguments
+        exit 2
+    fi
+    eval set -- "$ARGUMENTS"
+
+    while true; do
+        case $1 in
+            -h|--help)
+                help=1
+                shift 1
+                ;;
+            -n|--name)
+                project_name=$2
+                shift 2
+                ;;
+            -i|--image)
+                image=$2
+                shift 2
+                ;;
+            --)
+                shift
+                break
+                ;;
+        esac
+    done
+}
+
 function exec_init()
 {
-    init
+    parse_arguments $@
+    if [ $help ]; then
+        help
+    else
+        init
+    fi
 }
