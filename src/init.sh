@@ -25,7 +25,7 @@ function init()
     fi
     docker build -t $project_name $alternative_image .judo
     cd .judo
-    rm -r plugins_dir
+    rm -rf plugins_dir
     rm combined_config.sh
     echo $datafile_names | sed 's/ /\n/g' | xargs rm -r
 }
