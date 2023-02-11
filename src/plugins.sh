@@ -49,11 +49,16 @@ function install()
         plugin_name=${PWD##*/}
         cp -rp . $DATA_ROOT/plugins/$plugin_name && \
             echo "Successfully installed $plugin_name. You may now add it to your plugins-files."
-    elif [ $1 == *"/judo-"* ]; then
+    elif [ $(echo $1 | grep '/judo-') ]; then
         # Install plugin from github
-        echo "Installing plugin $1 ..."
-        git clone -q "https://github.com/$1" $DATA_ROOT/plugins
-        echo "Successfully installed plugin $1."
+        plugin_name=$(echo $1 | cut -d'/' -f2)
+        if [ ! -d $DATA_ROOT/plugins/$plugin_name ]; then
+            echo "Installing plugin $plugin_name ..."
+            git clone -q "https://github.com/$1" $DATA_ROOT/plugins/$plugin_name
+            echo "Successfully installed plugin $1."
+        else
+            echo "Plugin with name $plugin_name is already installed!"
+        fi
     else
         echo 'judo-plugins have to start with "judo-".'
     fi
@@ -89,7 +94,7 @@ function exec_plugins()
             ;;
 
         install)
-            install
+            install $2
             shift 1
             ;;
 
