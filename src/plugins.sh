@@ -82,7 +82,6 @@ project-specific config in <project-directory>/.judo/plugins." \
 
 function exec_plugins()
 {
-    echo $1
     case $1 in
         list)
             list
