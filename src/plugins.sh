@@ -49,7 +49,7 @@ function install()
         plugin_name=${PWD##*/}
         cp -rp . $DATA_ROOT/plugins/$plugin_name && \
             echo "Successfully installed $plugin_name. You may now add it to your plugins-files."
-    elsif [ $1 == *"/judo-"* ]
+    elif [ $1 == *"/judo-"* ]; then
         # Install plugin from github
         echo "Installing plugin $1 ..."
         git clone -q "https://github.com/$1" $DATA_ROOT/plugins
@@ -68,7 +68,7 @@ function uninstall()
 
 function help()
 {
-    source src/common.sh
+    source $DATA_ROOT/src/common.sh
     show_help "judo plugins" "Manage and get information on active and installed plugins." \
         list "List both installed plugins and plugins activate in the current image. \n
 You may have to update the image for new plugins to take effect." \
