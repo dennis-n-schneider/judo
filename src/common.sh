@@ -15,7 +15,7 @@ function show_help()
     COMMAND_NAME=$1
     shift 1
     opt=1
-    echo -e "usage: $COMMAND_NAME [COMMANDS] [options]\n"
+    echo -e "Usage: $COMMAND_NAME [COMMANDS] [options]\n"
 
     SUMMARY=$1
     shift 1
