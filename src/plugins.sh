@@ -105,7 +105,6 @@ function exec_plugins()
 
         help|*)
             help
-            shift 1
             ;;
     esac
 }
