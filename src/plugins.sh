@@ -55,6 +55,7 @@ function install()
         if [ ! -d $DATA_ROOT/plugins/$plugin_name ]; then
             echo "Installing plugin $plugin_name ..."
             git clone -q "https://github.com/$1" $DATA_ROOT/plugins/$plugin_name
+            chmod -R 777 $DATA_ROOT/plugins/$plugin_name
             echo "Successfully installed plugin $1."
         else
             echo "Plugin with name $plugin_name is already installed!"
