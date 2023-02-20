@@ -36,6 +36,26 @@ Available commands and configuration options can be viewed by:
 judo help
 ```
 
+## Configuration
+
+In order to minimize the size of multiple Docker images, packages a Developer always needs and differ from the base image installs, can be added to a user-specific config-file.
+For example, to add the torch library to all images built by a certain user, add the following line to the config-file in `~/.config/judo/config.sh`. Note that this file might need to be created if not already present.
+```shell
+pip install torch
+```
+
+Since this is a common shell-script, arbitrary commands and configurations of the jupyter environment can be defined here. See the following example, activating dark mode by default:
+```shell
+mkdir -p /opt/conda/share/jupyter/lab/settings
+echo '''
+{
+    "@jupyterlab/apputils-extension:themes": {
+        "theme": "JupyterLab Dark"    
+    }
+}
+'''
+```
+
 ### Extensions
 
 [judo-datasets](https://github.com/dennisschneider-ml/judo-datasets): Add a reproducible way to preprocess datasets.
