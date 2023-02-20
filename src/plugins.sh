@@ -47,8 +47,9 @@ function install()
     if [ $# -eq 0 ]; then
         # Install plugin from current directory
         plugin_name=${PWD##*/}
-        cp -rp . $DATA_ROOT/plugins/$plugin_name && \
+        cp -r . $DATA_ROOT/plugins/$plugin_name && \
             echo "Successfully installed $plugin_name. You may now add it to your plugins-files."
+        chmod -R 777 $DATA_ROOT/plugins/$plugin_name
     elif [ $(echo $1 | grep '/judo-') ]; then
         # Install plugin from github
         plugin_name=$(echo $1 | cut -d'/' -f2)
