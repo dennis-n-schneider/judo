@@ -53,7 +53,7 @@ echo '''
         "theme": "JupyterLab Dark"    
     }
 }
-'''
+''' > /opt/conda/share/jupyter/lab/settings/overrides.json
 ```
 
 ### Extensions
