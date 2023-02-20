@@ -76,10 +76,5 @@ function parse_arguments()
 
 function exec_init()
 {
-    parse_arguments $@
-    if [ $help ]; then
-        help
-    else
-        init
-    fi
+    init $@
 }
