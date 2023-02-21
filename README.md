@@ -56,7 +56,7 @@ echo '''
 ''' > /opt/conda/share/jupyter/lab/settings/overrides.json
 ```
 
-### Plugin Installation and Usage
+## Plugin Installation and Usage
 Plugins can be added to further benefit from the judo-environment.
 To find a list of installed plugins and plugins used in the current judo-project, run `judo plugins list`. \
 Plugins can be installed via the following command:
@@ -69,6 +69,6 @@ judo plugins install
 ```
 In order to use a plugin, it either can be added to `~/.config/judo/plugins`, or in the local config of your project in `<project-directory>/.judo/plugins`.
 
-#### Available Plugins
+### Available Plugins
 
 [judo-datasets](https://github.com/dennisschneider-ml/judo-datasets): Add a reproducible way to preprocess datasets.
