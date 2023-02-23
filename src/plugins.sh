@@ -11,11 +11,11 @@ function _parent_judo_dir()
     curr_dir=$1
     judo_dir=""
     while [ $(echo $curr_dir) != '/' ]; do
-        curr_dir=$(_traverse_file_tree $curr_dir)
         if $( ls -A $curr_dir | grep -q '.judo' ); then
             judo_dir=$curr_dir/.judo
             break
         fi
+        curr_dir=$(_traverse_file_tree $curr_dir)
     done
 
     echo $judo_dir

@@ -10,7 +10,6 @@ function help()
 {
     source $DATA_ROOT/src/common.sh
     show_help "judo run" "Run the judo-project in this directory." \
-        "-n|--name name" "Specify the name of the Docker container. Default: The current directories name (lowercase)." \
         "-p|--port port" "Use specific port. Default: 8888" "--" \
         "help" "View this help."
 }
@@ -24,11 +23,6 @@ function exec_run()
                 shift 2
                 ;;
 
-            -n|--name)
-                project_name=$2
-                shift 2
-                ;;
-
             help|*)
                 help
                 shift 1
@@ -36,8 +30,7 @@ function exec_run()
                 ;;
         esac
     done
-    echo $port
-    echo $project_name
-    #run
+    source $DATA_ROOT/src/plugins.sh; project_name=$(cat $(_parent_judo_dir $PWD)/container_name)
+    run
 }
 

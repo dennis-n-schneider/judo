@@ -23,6 +23,7 @@ function init()
         git add requirements.txt
     fi
     # Use alternative image if specified.
+    echo $project_name > .judo/container_name
     if [ ! -z $image ]; then
         alternative_image="--build-arg BASE_IMAGE=$image"
     fi
