@@ -10,12 +10,16 @@ USER root
 # Copy install script.
 COPY ./plugin-install.sh /usr/local/bin/before-notebook.d/
 
-# Install plugins.
+# Install active plugins.
 COPY ./plugins_dir /tmp/plugins/
 
 # Setup configuration.
-COPY ./combined_config.sh /tmp/config.sh
-RUN sh /tmp/config.sh
+COPY ./common_config.sh /tmp/common_config.sh
+RUN sh /tmp/common_config.sh
+
+# Setup project-specific configuration.
+COPY ./project_config.sh /tmp/project_config.sh
+RUN sh /tmp/project_config.sh
 
 # Install project-specific requirements.
 COPY ./requirements.txt /home/jovyan/work/requirements.txt

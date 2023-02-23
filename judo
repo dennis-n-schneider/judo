@@ -25,7 +25,7 @@ case $1 in
 
     help|*)
         source $DATA_ROOT/src/common.sh
-        show_help judo "Create an isolated jupyter instance for development" \
+        show_help judo "Create an isolated jupyter instance for development." \
             init "Initialize the Docker runtime and git repository." \
             run "Run the Docker container." \
             plugins "Manage and get information on active and installed plugins." \
