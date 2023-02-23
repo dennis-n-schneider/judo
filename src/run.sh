@@ -3,7 +3,7 @@
 
 function run()
 {
-    docker run --pull never -e GRANT_SUDO=yes --user=root -it --rm -p $port:8888 -v $PWD:/home/jovyan/work --name $project_name $project_name
+    docker run --pull never -e GRANT_SUDO=yes --user=root -it --rm -p $port:8888 -v $judo_dir:/home/jovyan/work --name $project_name $project_name
 }
 
 function help()
@@ -30,7 +30,10 @@ function exec_run()
                 ;;
         esac
     done
-    source $DATA_ROOT/src/plugins.sh; project_name=$(cat $(_parent_judo_dir $PWD)/container_name)
+    source $DATA_ROOT/src/plugins.sh
+
+    judo_dir=$(_parent_judo_dir $PWD)
+    project_name=$(cat $judo_dir/container_name)
     run
 }
 
