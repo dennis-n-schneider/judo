@@ -3,7 +3,7 @@
 function init()
 {
     mkdir -p .judo/.cache .judo/.cache/plugins_dir
-    # Get active plugins and copy to image cache if updated
+    # Get active plugins and copy to image cache if updated.
     source $DATA_ROOT/src/plugins.sh; echo $(_active_plugins) | xargs -I{} cp -rpu $DATA_ROOT/plugins/{} .judo/.cache/plugins_dir
     touch .judo/config.sh .judo/plugins
     if [ -z $ignore_global_config ]; then
