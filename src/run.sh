@@ -3,7 +3,7 @@
 
 function run()
 {
-    docker run --pull never -e GRANT_SUDO=yes --user=root -it --rm -p $port:8888 -v $judo_dir:/home/jovyan/work --name $project_name $project_name
+    docker run --pull never -e GRANT_SUDO=yes --user=root -it --rm -p $port:8888 -v $judo_dir/..:/home/jovyan/work --name $project_name $project_name
 }
 
 function help()
