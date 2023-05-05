@@ -73,12 +73,25 @@ function uninstall()
         echo "Successfully uninstalled $plugin_name."
 }
 
+function activate()
+{
+    if [ $# -gt 0 ]; then
+        judo_dir=$(_parent_judo_dir $PWD)
+
+        if [ ! -z $judo_dir ] && [ -f $judo_dir/plugins ]; then
+            echo $1 >> $judo_dir/plugins
+        fi
+
+    fi
+}
+
 function help()
 {
     source $DATA_ROOT/src/common.sh
     show_help "judo plugins" "Manage and get information on active and installed plugins." \
         list "List both installed plugins and plugins active in the current image. \n
 You may have to update the image for new plugins to take effect." \
+        activate "Activate an already installed plugin for this project." \
         install "When run inside a plugin-directory, install this plugin and make it available for images. \n
 When having specified a plugin-name, pull this plugin from git and install it. \n
 You can use this plugin by noting its name in the global config under ~/.config/judo/plugins or the \n
@@ -95,6 +108,10 @@ function exec_plugins()
             shift 1
             ;;
 
+        activate)
+            activate $2
+            shift 1
+            ;;
         install)
             install $2
             shift 1
